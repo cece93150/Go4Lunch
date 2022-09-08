@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.fragment.app.ListFragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.projettest.go4lunch.R;
@@ -43,9 +44,17 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.navigation:
+                case R.id.map_bottom:
                     toolbar.setTitle("I'm Hungry");
                     MainActivity.this.displayFragment(new MapsFragment());
+                    return true;
+                case R.id.list_bottom:
+                    toolbar.setTitle("I'm Hungry");
+                    MainActivity.this.displayFragment(new ListFragment());
+                    return true;
+                case R.id.workmates_bottom:
+                    toolbar.setTitle("Available Workmates");
+                    MainActivity.this.displayFragment(new WorkmatesFragment());
                     return true;
             }
             return false;

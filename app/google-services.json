@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "304848488497",
+    "project_id": "pure-feat-361821",
+    "storage_bucket": "pure-feat-361821.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304848488497:android:3df341989a97bd8b426d10",
+        "android_client_info": {
+          "package_name": "com.projettest.go4lunch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304848488497-be3lqbjad6ea7dcjr0pdgvuk8qmobrcv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUGmqNzzbRuSqVNA9SCBwFaV6soNE7wmI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304848488497-be3lqbjad6ea7dcjr0pdgvuk8qmobrcv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
