@@ -1,0 +1,11 @@
+package com.projettest.go4lunch.datasource;
+
+import java.util.List;
+
+public class NearbySearchResponse {
+    List<NearbyPlace> results;
+
+    public List<NearbyPlace> getResults() {
+        return results;
+    }
+}
