@@ -71,7 +71,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
         Log.d("MapsFragment", "onMapReady: ");
 
         PlaceDataSource mPlaceDataSource = PlaceDataSource.retrofit.create(PlaceDataSource.class);
-        mPlaceDataSource.getNearbySearch("48.864716,2.349014","restaurant", BuildConfig.MAPS_API_KEY,2000)
+        mPlaceDataSource.getNearbySearch("48.864716,2.349014","restaurant", BuildConfig.MAPS_API_KEY,"2000")
                 .enqueue(new Callback<NearbySearchResponse>() {
                     @Override
                     public void onResponse(Call<NearbySearchResponse> call, Response<NearbySearchResponse> response) {
@@ -80,6 +80,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                             NearbySearchResponse nearbySearchResponse = response.body();
                             Log.d("MapsFragment", "onResponse: "+nearbySearchResponse.getResults().size());
                             for (NearbyPlace nearbyPlace : nearbySearchResponse.getResults()) {
+                             MarkerOptions marker = new MarkerOptions()
+                                        .position(new LatLng(nearbyPlace.getGeometry().getLocation().getLat(),nearbyPlace.getGeometry().getLocation().getLng()));
+                               mMap.addMarker(marker);
                                 Log.d("MapsFragment", "onResponse: "+nearbyPlace);
                             }
                         }
@@ -96,9 +99,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
                 });
         // Add a marker in Paris and move the camera
         LatLng paris = new LatLng(48.864716, 2.349014);
-        mMap.addMarker(new MarkerOptions()
-                .position(paris)
-                .title("Marker in Paris"));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(paris, 15));
 
     }
