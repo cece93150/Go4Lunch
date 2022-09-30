@@ -19,4 +19,10 @@ public interface PlaceDataSource {
             @Query("types") String types,
             @Query("key") String key,
             @Query("radius") String radius);
+
+
+    public static PlaceDataSource getPlaceDataSource() {
+        return retrofit.create(PlaceDataSource.class);
+    }
 }
+

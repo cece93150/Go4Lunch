@@ -14,11 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -32,9 +34,13 @@ import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.projettest.go4lunch.BuildConfig;
 import com.projettest.go4lunch.R;
+import com.projettest.go4lunch.ViewModelFactory;
 import com.projettest.go4lunch.datasource.NearbyPlace;
 import com.projettest.go4lunch.datasource.NearbySearchResponse;
 import com.projettest.go4lunch.datasource.PlaceDataSource;
+import com.projettest.go4lunch.model.MapRestaurant;
+import com.projettest.go4lunch.model.Restaurant;
+import com.projettest.go4lunch.repository.RestaurantRepository;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -54,6 +60,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_maps, container, false);
+
     }
 
     @Override
@@ -68,38 +75,17 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-        Log.d("MapsFragment", "onMapReady: ");
+        MapViewModel viewModel = new ViewModelProvider(this).get(MapViewModel.class);
+        LatLng paris = new LatLng(48.864716, 2.349014);
 
-        PlaceDataSource mPlaceDataSource = PlaceDataSource.retrofit.create(PlaceDataSource.class);
-        mPlaceDataSource.getNearbySearch("48.864716,2.349014","restaurant", BuildConfig.MAPS_API_KEY,"2000")
-                .enqueue(new Callback<NearbySearchResponse>() {
-                    @Override
-                    public void onResponse(Call<NearbySearchResponse> call, Response<NearbySearchResponse> response) {
-                        Log.d("MapsFragment", "onResponse: ");
-                        if (response.isSuccessful()){
-                            NearbySearchResponse nearbySearchResponse = response.body();
-                            Log.d("MapsFragment", "onResponse: "+nearbySearchResponse.getResults().size());
-                            for (NearbyPlace nearbyPlace : nearbySearchResponse.getResults()) {
-                             MarkerOptions marker = new MarkerOptions()
-                                        .position(new LatLng(nearbyPlace.getGeometry().getLocation().getLat(),nearbyPlace.getGeometry().getLocation().getLng()));
-                               mMap.addMarker(marker);
-                                Log.d("MapsFragment", "onResponse: "+nearbyPlace);
-                            }
-                        }
-                        else {
-                            Log.d("MapsFragment", "onError: "+response.code());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<NearbySearchResponse> call, Throwable t) {
-                        Log.d("MapsFragment", "onFailure: ");
-                        t.printStackTrace();
+        viewModel.getViewStateLiveData().observe(getViewLifecycleOwner(),
+                RestaurantViewState -> {
+                    if (RestaurantViewState != null) {
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                paris,
+                                15));
+                        RestaurantViewState.getRestaurants();
                     }
                 });
-        // Add a marker in Paris and move the camera
-        LatLng paris = new LatLng(48.864716, 2.349014);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(paris, 15));
-
     }
 }

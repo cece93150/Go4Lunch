@@ -3,8 +3,7 @@ package com.projettest.go4lunch.model;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.model.OpeningHours;
 import com.google.android.libraries.places.api.model.PhotoMetadata;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 public class Restaurant {
     private String id;
