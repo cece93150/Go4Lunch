@@ -2,12 +2,10 @@ package com.projettest.go4lunch.ui;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.projettest.go4lunch.RestaurantViewState;
 import com.projettest.go4lunch.datasource.NearbyPlace;
 import com.projettest.go4lunch.model.MapRestaurant;
 import com.projettest.go4lunch.repository.RestaurantRepository;
@@ -19,7 +17,7 @@ public class MapViewModel extends ViewModel {
     private final RestaurantRepository repository;
 
 
-    private final LiveData<RestaurantViewState> restaurantViewStateLiveData;
+    private final LiveData<MapViewState> restaurantViewStateLiveData;
 
     public MapViewModel(RestaurantRepository restaurantRepository) {
         repository = restaurantRepository;
@@ -32,11 +30,11 @@ public class MapViewModel extends ViewModel {
     }
 
     // This is the "final product" of our ViewModel : every data needed from the view is in this LiveData
-    public LiveData<RestaurantViewState> getViewStateLiveData() {
+    public LiveData<MapViewState> getViewStateLiveData() {
         return restaurantViewStateLiveData;
     }
 
-    private RestaurantViewState mapDataToViewState(@Nullable List<NearbyPlace> restaurantList) {
+    private MapViewState mapDataToViewState(@Nullable List<NearbyPlace> restaurantList) {
         List<MapRestaurant> restaurantToBeDisplayed = new ArrayList<>();
 
         if (restaurantList != null) {
@@ -49,6 +47,6 @@ public class MapViewModel extends ViewModel {
             }
         }
 
-        return new RestaurantViewState(restaurantToBeDisplayed);
+        return new MapViewState(restaurantToBeDisplayed);
     }
 }

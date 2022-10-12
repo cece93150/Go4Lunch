@@ -33,7 +33,7 @@ public class RestaurantRepository {
         restaurantApi.getNearbySearch("48.864716,2.349014", "restaurant", BuildConfig.MAPS_API_KEY, "2000").enqueue(new Callback<NearbySearchResponse>() {
             @Override
             public void onResponse(@NonNull Call<NearbySearchResponse> call, @NonNull Response<NearbySearchResponse> response) {
-                if (response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     restaurantMutableLiveData.setValue(response.body().getResults());
                 }
             }

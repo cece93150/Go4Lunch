@@ -1,4 +1,4 @@
-package com.projettest.go4lunch;
+package com.projettest.go4lunch.ui;
 
 import androidx.annotation.NonNull;
 
@@ -8,11 +8,11 @@ import com.projettest.go4lunch.model.MapRestaurant;
 import java.util.List;
 import java.util.Objects;
 
-public class RestaurantViewState {
+public class MapViewState {
     @NonNull
     private List<MapRestaurant> restaurants;
 
-    public RestaurantViewState(
+    public MapViewState(
             @NonNull List<MapRestaurant> restaurants
 
     ) {
@@ -21,7 +21,7 @@ public class RestaurantViewState {
 
     @Override
     public String toString() {
-        return "RestaurantViewState{" +
+        return "MapViewState{" +
                 "restaurants=" + restaurants +
                 '}';
     }

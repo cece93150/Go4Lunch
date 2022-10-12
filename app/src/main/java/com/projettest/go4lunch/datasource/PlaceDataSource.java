@@ -20,6 +20,13 @@ public interface PlaceDataSource {
             @Query("key") String key,
             @Query("radius") String radius);
 
+    @GET("/maps/api/place/details/json")
+    Call<RestaurantDetailsResponse> getDetailsRestaurant(
+            @Query("place_id") String placeId,
+            @Query("key") String key
+    );
+
+
 
     public static PlaceDataSource getPlaceDataSource() {
         return retrofit.create(PlaceDataSource.class);

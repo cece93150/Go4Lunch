@@ -7,14 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.fragment.app.ListFragment;
-import androidx.lifecycle.ViewModelProvider;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.projettest.go4lunch.R;
-import com.projettest.go4lunch.RestaurantViewState;
-import com.projettest.go4lunch.ViewModelFactory;
-import com.projettest.go4lunch.model.Restaurant;
 
 public class MainActivity extends AppCompatActivity {
 

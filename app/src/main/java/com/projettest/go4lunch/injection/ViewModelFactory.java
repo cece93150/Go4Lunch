@@ -1,12 +1,15 @@
-package com.projettest.go4lunch;
+package com.projettest.go4lunch.injection;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.projettest.go4lunch.datasource.PlaceDataSource;
+import com.projettest.go4lunch.model.Restaurant;
+import com.projettest.go4lunch.repository.RestaurantDetailsRepository;
 import com.projettest.go4lunch.repository.RestaurantRepository;
 import com.projettest.go4lunch.ui.MapViewModel;
+import com.projettest.go4lunch.ui.RestaurantViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
     private static ViewModelFactory factory;
@@ -22,9 +25,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         return factory;
     }
 
+    private final RestaurantDetailsRepository restaurantDetailsRepository =
+            new RestaurantDetailsRepository(PlaceDataSource.getPlaceDataSource());
 
     private final RestaurantRepository restaurantRepository = new RestaurantRepository(
-
             PlaceDataSource.getPlaceDataSource()
     );
 
@@ -38,6 +42,10 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(MapViewModel.class)) {
             // We inject the Repository in the ViewModel constructor
             return (T) new MapViewModel(restaurantRepository);
+        }
+        if (modelClass.isAssignableFrom(RestaurantViewModel.class)) {
+            // We inject the Repository in the ViewModel constructor
+            return (T) new RestaurantViewModel(restaurantRepository);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }
